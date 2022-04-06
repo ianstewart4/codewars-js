@@ -32,3 +32,4 @@ function alphabetPosition(text) {
         .map((c) => c.charCodeAt() - 64)
         .join(' ');
 }
+
