@@ -68,3 +68,19 @@ function validSolution(board) {
     for (var i = 0; i < 3; i++) if (!osums[i].every(equals45)) return false;
     return (sumh.every(equals45) && sumv.every(equals45));
 }
+
+// Best in my opinion
+// Loooove this one
+// Like a way more efficient version of my own although a little dense for my liking
+
+function validSolution(board) {
+    var validSet = s => s.size == 9 && !s.has(0);
+    var rowSet = i => board[i].reduce((s, v) => s.add(v), new Set());
+    var columnSet = i => board.reduce((s, v) => s.add(v[i]), new Set());
+    var boxSet = ([r, c]) => board.slice(r, r + 3).reduce((s, v) => v.slice(c, c + 3).reduce((s, v) => s.add(v), s), new Set());
+    var boxCorner = i => [Math.floor(i / 3) * 3, (i % 3) * 3];
+    for (var i = 0; i < 9; i++)
+        if (!validSet(rowSet(i)) || !validSet(columnSet(i)) || !validSet(boxSet(boxCorner(i))))
+            return false;
+    return true;
+}
