@@ -1,59 +1,100 @@
+// Snail Sort
+// Given an n x n array, return the array elements arranged from outermost elements to the middle element, traveling clockwise.
+
+// array = [[1,2,3],
+//          [4,5,6],
+//          [7,8,9]]
+// snail(array) #=> [1,2,3,6,9,8,7,4,5]
+// For better understanding, please follow the numbers of the next array consecutively:
+
+// array = [[1,2,3],
+//          [8,9,4],
+//          [7,6,5]]
+// snail(array) #=> [1,2,3,4,5,6,7,8,9]
+// This image will illustrate things more clearly:
 
 
+// NOTE: The idea is not sort the elements from the lowest value to the highest; the idea is to traverse the 2-d array in a clockwise snailshell pattern.
+
+// NOTE 2: The 0x0 (empty matrix) is represented as en empty array inside an array [[]].
 
 // My solution
-snail = function(array) {
-    // There are 4 steps that once complete can be repeated
-    // for each step I need 3 parameters: Start, iterations, trigger for next step
-    // Step 1: [x0,y0] --> y++ --> [x,y.length]
-    // Step 2: [x,y.length] --> x++ --> [x.length,y.length]
-    // Step 3: [x.length,y.length] --> y-- --> [x.length,y0]
-    // Step 4: [x.length,y0] --> x-- --> [x1,y0]
-    // console.log(array)
-    let snailArr = []
-    let add = 0
-    let countX = array[0].length
-    let countY = array.length
-    
 
-    
-  
-    return snailArr
+snail = function (array) {
+  // takes in array of arrays, returns array
+  let newArr = []
+  // i = row, j = column [i,j] (I know it's backwards, )
+  let i
+  let j
+  // bounds top,right,bottom, left
+  // top would start at 0
+  let top = 0
+  // right would start at length of array in array
+  let right = array[0].length - 1
+  // bottom would start at length of array of arrays
+  let bottom = array.length - 1
+  // left would start at 0 of array in array
+  let left = 0
+
+  while (left <= right || bottom >= top) {
+    // 4 different processes:
+    // TOP
+    // Starting at top left, left to right(increment j, hold i), add 1 to top
+
+    if (top <= bottom) {
+      i = top
+      // newArr.push('TOP')
+      for (let j = left; j <= right; j++) {
+        newArr.push(array[i][j])
+      }
+      top += 1
+    }
+    // RIGHT
+    // Starting at top right, top to bottom(hold j, increment i), remove 1 from right
+
+    if (left <= right) {
+      j = right
+      // newArr.push('RIGHT')
+      for (let i = top; i <= bottom; i++) {
+        newArr.push(array[i][j])
+      }
+      right -= 1
+    }
+    // BOTTOM
+    // Starting at bottom right, right to left(decrement j, hold i), add 1 to left
+
+    if (top <= bottom) {
+      i = bottom
+      // newArr.push('BOTTOM')
+      for (let j = right; j >= left; j--) {
+        newArr.push(array[i][j])
+      }
+      bottom -= 1
+    }
+    // LEFT
+    // Start at bottom left, bottom to top(hold j, decrement i, add 1 to left
+
+    if (left <= right) {
+      j = left
+      // newArr.push('LEFT')
+      for (let i = bottom; i >= top; i--) {
+        newArr.push(array[i][j])
+      }
+      left += 1
+    }
   }
-  
-  // let test = [[0, 1, 2, 3, 4]]
-  
-  // console.log(snail(test))
-  
-//   let test = [[]]
-//   let test1 = [[1]]
-  
-//   console.log(test[0].length)
-//   console.log(test1[0].length)
-console.log(snail([[]])) // []
-  
-console.log(snail([[1]])) // [1]
-  
-//   console.log(snail([[1, 2, 3], 
-//                      [4, 5, 6], 
-//                      [7, 8, 9]])) 
-  
-  // //[1, 2, 3, 6, 9, 8, 7, 4, 5]
-              
-  // console.log(snail([[1, 2, 3, 4, 5], 
-  //                    [6, 7, 8, 9, 10], 
-  //                    [11, 12, 13, 14, 15], 
-  //                    [16, 17, 18, 19, 20], 
-  //                    [21, 22, 23, 24, 25]]))
-  
-  // //[1, 2, 3, 4, 5, 10, 15, 20, 25, 24, 23, 22, 21, 16, 11, 6, 7, 8, 9, 14, 19, 18, 17, 12, 13]
-  
-  // console.log(snail([[1,  2,   3,  4,  5, 6], 
-  //                    [20, 21, 22, 23, 24, 7], 
-  //                    [19, 32, 33, 34, 25, 8], 
-  //                    [18, 31, 36, 35, 26, 9], 
-  //                    [17, 30, 29, 28, 27, 10], 
-  //                    [16, 15, 14, 13, 12, 11]]))
-  
-  // // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36]);
-  
+  return newArr
+}
+
+// Favourite
+// Next level. 
+
+function snail(array) {
+  var vector = [];
+  while (array.length) {
+    vector.push(...array.shift());
+    array.map(row => vector.push(row.pop()));
+    array.reverse().map(row => row.reverse());
+  }
+  return vector;
+}
