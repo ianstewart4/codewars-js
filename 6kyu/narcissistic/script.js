@@ -14,6 +14,7 @@
 
 // My solution
 // Could have been a one-liner, but splitting it up for readability. Probably could have split it up more. 
+// Should not have used map here. Sometimes forget reduce can do more than simply summing.
 
 function narcissistic(value) {
     let valArr = String(value).split('')
@@ -22,6 +23,7 @@ function narcissistic(value) {
 }
 
 // Best/Most Clever Solution
+// Really quite similar to mine but with different syntax. adding '' to the value to make it a string, using math.pow instead of **, and using reduce instead of map and reduce would be more efficient...
 
 function narcissistic(value) {
     return ('' + value).split('').reduce(function (p, c) {
