@@ -17,6 +17,7 @@ function stringy(size) {
 }
 
 // Best
+// Genius. I wish I would have thought of this!
 
 function stringy(size) {
     var str = '';
