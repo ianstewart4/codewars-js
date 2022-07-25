@@ -1,0 +1,35 @@
+// In this Kata, you will be given a string that may have mixed uppercase and lowercase letters and your task is to convert that string to either lowercase only or uppercase only based on:
+
+// make as few changes as possible.
+// if the string contains equal number of uppercase and lowercase letters, convert the string to lowercase.
+// For example:
+
+// solve("coDe") = "code". Lowercase characters > uppercase. Change only the "D" to lowercase.
+// solve("CODe") = "CODE". Uppercase characters > lowecase. Change only the "e" to uppercase.
+// solve("coDE") = "code". Upper == lowercase. Change all to lowercase.
+
+// My solution
+
+function solve(s) {
+    s = s.split('')
+    if (s.length / 2 <= s.filter(x => x.toLowerCase() == x).length) {
+        return s.map(x => x.toLowerCase()).join('')
+    }
+    return s.map(x => x.toUpperCase()).join('')
+}
+
+// Best
+
+function solve(s) {
+    let lowerC = 0;
+    let upperC = 0;
+    for (let i = 0; i < s.length; i++) {
+        if (s[i] == s[i].toUpperCase()) {
+            upperC++;
+        }
+        else {
+            lowerC++;
+        }
+    }
+    return lowerC >= upperC ? s.toLowerCase() : s.toUpperCase()
+}
